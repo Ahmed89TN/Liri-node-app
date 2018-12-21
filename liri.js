@@ -81,15 +81,15 @@ function concertThis() {
 }
 function doWhatItSays() {
     fs.readFile("random.txt", "utf8", function(error, data) {
-  // If the code experiences any errors it will log the error to the console.
+  
   if (error) {
     return console.log(error);
   }
-  // We will then print the contents of data
+  
   console.log(data);
 });
 }
-// Here we run the movies function
+
 function movieThis() {
     inquirer.prompt([
         {
@@ -99,11 +99,11 @@ function movieThis() {
         },
     ]).then(function (response) {
         fs.appendFile("log.txt", response.movie + "\n", function (err) {
-            // If an error was experienced we will log it.
+            
             if (err) {
                 console.log(err);
             }
-            // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+            
             else {
                 console.log("Content Added!");
             }
@@ -136,7 +136,7 @@ function movieThis() {
         );
      } })
 }
-// Here we run the spotify function
+
 function spotifyThis() {
     inquirer.prompt([
         {
@@ -146,11 +146,11 @@ function spotifyThis() {
         },
     ]).then(function (response) {
         fs.appendFile("log.txt", response.song + "\n", function (err) {
-            // If an error was experienced we will log it.
+            
             if (err) {
                 console.log(err);
             }
-            // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+        
             else {
                 console.log("Content Added!");
             }
