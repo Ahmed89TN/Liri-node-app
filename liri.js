@@ -1,6 +1,4 @@
-//At the top of the liri.js file, add code to read and set any 
-//environment variables with the dotenv package:
-// Here we declare our variables
+
 var fs = require("fs");
 var inquirer = require("inquirer");
 var axios = require("axios");
@@ -9,7 +7,7 @@ var dotenv = require("dotenv").config();
 var keys = require("./keys.js");
 var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
-// we start the program by asking user what they are looking for
+
 inquirer.prompt([
     {
         type: "list",
@@ -23,7 +21,7 @@ inquirer.prompt([
         doWhatItSays();
     }
 });
-// list of actions the user can choose from 
+
 const myFunction = action => {
     switch (action) {
         case "concert-this": concertThis();
@@ -36,7 +34,7 @@ const myFunction = action => {
             break;
     }
 }
-// Here we run the bands in town function
+
 function concertThis() {
     inquirer.prompt([
         {
@@ -47,11 +45,11 @@ function concertThis() {
     ]).then(function (response) {
         
         fs.appendFile("log.txt", response.band + "\n", function (err) {
-            // If an error was experienced we will log it.
+        
             if (err) {
                 console.log(err);
             }
-            // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+            
             else {
                 console.log("Content Added!");
             }
@@ -67,14 +65,14 @@ function concertThis() {
                 }
                  else {
                 
-                console.log("~~~~~~~~~~~~~");
+                console.log("*********************");
                 console.log("Band: " + response.data[0].lineup[0]);
                 console.log("Venue: " + response.data[0].venue.name);
                 console.log("Location: " + response.data[0].venue.country);
                 console.log(response.data[0].venue.city);
                 console.log(response.data[0].venue.region);
                 console.log("Date of event: " + response.data[0].datetime);
-                console.log("~~~~~~~~~~~~~");
+                console.log("***********************");
                    
             }
             }
@@ -111,7 +109,7 @@ function movieThis() {
             }
         });
                 if (response.movie === "") {
-                    console.log("~~~~~~~~~~~~~");
+                    console.log("************************");
                     console.log("Movie Title: Mr. Nobody" );
                     console.log("Year of the movie: 2009 " );
                     console.log("IMDB Rating: 7.9 " );
@@ -120,11 +118,11 @@ function movieThis() {
                     console.log("Language: English, Mohawk" );
                     console.log("Movie Plot: A boy stands on a station platform as a train is about to leave. Should he go with his mother or stay with his father? Infinite possibilities arise from this decision. As long as he doesn't choose, anything is possible. " );
                     console.log("Actors: Jared Leto, Sarah Polley, Diane Kruger, Linh Dan Pham " );
-                    console.log("~~~~~~~~~~~~~"); 
+                    console.log("*************************"); 
                 } else{
         axios.get("http://www.omdbapi.com/?t=" + response.movie + "&y=&plot=short&apikey=trilogy").then(
             function (response) {
-                console.log("~~~~~~~~~~~~~");
+                console.log("***********************");
                 console.log("Movie Title: " + response.data.Title);
                 console.log("Year of the movie: " + response.data.Year);
                 console.log("IMDB Rating: " + response.data.imdbRating);
@@ -133,7 +131,7 @@ function movieThis() {
                 console.log("Language: " + response.data.Language);
                 console.log("Movie Plot: " + response.data.Plot);
                 console.log("Actors: " + response.data.Actors);
-                console.log("~~~~~~~~~~~~~");
+                console.log("*************************");
             }
         );
      } })
@@ -157,18 +155,22 @@ function spotifyThis() {
                 console.log("Content Added!");
             }
         });
+        if (response.song==="") {
+            console.log("Please enter a song !")
+        }
+        else{
         spotify.search({ type: 'track', query: response.song }, function (err, data) {
             if (err) {
                 return console.log(data);
             }
-            console.log("~~~~~~~~~~~~~~~~~~~");
+            console.log("*************************");
             console.log("Artist(s): " + data.tracks.items[0].artists[0].name);
             console.log("Name Of The Song: " + data.tracks.items[0].name);
             console.log("Preview Link: " + data.tracks.items[0].preview_url);
             console.log("Album: " + data.tracks.items[0].album.name);
-            console.log("~~~~~~~~~~~~~~~~~~~");
+            console.log("**************************");
         });
-    })
+    } })
 }
 
 
